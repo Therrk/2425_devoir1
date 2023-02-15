@@ -1,10 +1,10 @@
 //------------------------------------------------------
 // module  : Tp-IFT2425-I.1.c
-// author  : 
+// author  : Ã‰lie Leblanc
 // date    : 
 // version : 1.0
 // language: C
-// note    :
+// note    :100%
 //------------------------------------------------------
 //  
 
@@ -61,7 +61,7 @@ int open_display()
 
 /************************************************************************/
 /* FABRIQUE_WINDOW()							*/
-/* Cette fonction crée une fenetre X et l'affiche à l'écran.	        */
+/* Cette fonction crï¿½e une fenetre X et l'affiche ï¿½ l'ï¿½cran.	        */
 /************************************************************************/
 Window fabrique_window(char *nom_fen,int x,int y,int width,int height,int zoom)
 {
@@ -105,7 +105,7 @@ Window fabrique_window(char *nom_fen,int x,int y,int width,int height,int zoom)
 
 /****************************************************************************/
 /* CREE_XIMAGE()							    */
-/* Crée une XImage à partir d'un tableau de float                           */
+/* Crï¿½e une XImage ï¿½ partir d'un tableau de float                           */
 /* L'image peut subir un zoom.						    */
 /****************************************************************************/
 XImage* cree_Ximage(float** mat,int z,int length,int width)
@@ -313,6 +313,42 @@ void Egalise(float** img,int lgth,int wdth,int thresh)
 // PROGRAMME PRINCIPAL -------------------------------------
 //----------------------------------------------------------
 //----------------------------------------------------------
+
+float numerator_sum(float cmv, float y[]){
+  int i,sum;
+  sum =0;
+  for (i = 0; i < 10 i; i++) {
+	  sum= sum + pow(y[i],cmv)*log(y[i])
+  }
+  return sum;
+}
+
+float denominator_sum(float cmv, float y[]){
+  int i,sum;
+  sum =0;
+  for (i = 0; i < 10; i++) {
+	  sum = sum + pow(y[i],cmv);
+  }
+  return sum;
+}
+
+float other_sum(float y[]){
+  int i,sum;
+  sum = 0;
+  for (i = 0; i < 10; i++) {
+	  sum = sum+log(y[i])
+  }
+  return sum/10;
+}
+
+float func_eval(float cmv, float y[]){
+  return (numerator_sum(cmv,y)/denominator_sum(cmv,y))-(1/cmv + other_sum(y)));
+}
+
+return deriv_eval(float cmv, float y[], float e){
+  return (func_eval(cmv+e,y)-func_eval(cmv,y))/e;
+}
+
 int main(int argc,char** argv)
 {
   int i,j,k;
@@ -339,18 +375,13 @@ int main(int argc,char** argv)
 // PROGRAMME ---------------------------------------------------------------------
 //--------------------------------------------------------------------------------
 
- //Affichage dégradé de niveaux de gris dans Graph2D
+ //Affichage dï¿½gradï¿½ de niveaux de gris dans Graph2D
  for(int i=0;i<length;i++) for(int j=0;j<width;j++) Graph2D[i][j]=j/2.0;
 
-  
-   //---------------------------
-   //Algorithme NEWTON
-   //---------------------------
-
-   //implementer ici
- 
-
-  
+ float e,cmv;
+ e=0.000001
+ cmv=0.25;
+ float y[]={0.11,0.24,0.27,0.52,1.13,1.54,1.71,1.84,1.92,2.01};
      
 //--------------------------------------------------------------------------------
 //---------------- visu sous XWINDOW ---------------------------------------------
