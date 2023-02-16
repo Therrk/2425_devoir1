@@ -315,16 +315,18 @@ void Egalise(float** img,int lgth,int wdth,int thresh)
 //----------------------------------------------------------
 
 float numerator_sum(float cmv, float y[]){
-  int i,sum;
+  float sum;
+  int i;
   sum =0;
-  for (i = 0; i < 10 i; i++) {
-	  sum= sum + pow(y[i],cmv)*log(y[i])
-  }
+  for (i = 0; i < 10 ; i++) {
+	  sum= sum + pow(y[i],cmv)*log(y[i]);
+  };
   return sum;
 }
 
 float denominator_sum(float cmv, float y[]){
-  int i,sum;
+  float sum;
+  int i;
   sum =0;
   for (i = 0; i < 10; i++) {
 	  sum = sum + pow(y[i],cmv);
@@ -333,20 +335,22 @@ float denominator_sum(float cmv, float y[]){
 }
 
 float other_sum(float y[]){
-  int i,sum;
+  float sum;
+  int i;
   sum = 0;
   for (i = 0; i < 10; i++) {
-	  sum = sum+log(y[i])
-  }
+	  sum = sum+log(y[i]);
+  };
   return sum/10;
 }
 
 float func_eval(float cmv, float y[]){
-  return (numerator_sum(cmv,y)/denominator_sum(cmv,y))-(1/cmv + other_sum(y)));
+  return (numerator_sum(cmv,y)/denominator_sum(cmv,y))-(1/cmv + other_sum(y));
 }
 
-return deriv_eval(float cmv, float y[], float e){
+float deriv_eval(float cmv, float y[], float e){
   return (func_eval(cmv+e,y)-func_eval(cmv,y))/e;
+  
 }
 
 int main(int argc,char** argv)
@@ -379,9 +383,23 @@ int main(int argc,char** argv)
  for(int i=0;i<length;i++) for(int j=0;j<width;j++) Graph2D[i][j]=j/2.0;
 
  float e,cmv;
- e=0.000001
+ e=0.000001;
+
  cmv=0.25;
+ float err=1000000000;
  float y[]={0.11,0.24,0.27,0.52,1.13,1.54,1.71,1.84,1.92,2.01};
+ float p;
+ do{
+  p=cmv;
+  cmv=cmv-func_eval(cmv,y)/deriv_eval(cmv,y,0.00001);
+  err=cmv-p;
+ }while(e<err);
+ printf("%f", cmv);
+ 
+
+
+ 
+ 
      
 //--------------------------------------------------------------------------------
 //---------------- visu sous XWINDOW ---------------------------------------------
