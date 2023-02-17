@@ -341,22 +341,26 @@ int main(int argc,char** argv)
 //--------------------------------------------------------------------------------
   float x,y,x_in,y_in;
  //Affichage d�grad� de niveaux de gris dans Graph2D
+ int o=0;
  for(int i=0;i<length;i++) for(int j=0;j<width;j++){
-  x_in = 2*((i-width)/1.35)*(width-1);
-  y_in = 2*((j-length)/2)*(length-1);
+  //x_in = 2*((i-width)/1.35)/(width-1);
+  //y_in = 2*((j-length)/2.0)/(length-1);
+  x_in=i;
+  y_in=j;
   x=0;
   y=0;
   for (k = 0; k < 200; k++) {
     x = CARRE(x)-CARRE(y)+x_in;
     y = (2*x*y)+y_in;
 	  if(sqrt(CARRE(x)+CARRE(y))>2){
-	    printf("%i\n",j);
+      o=o+1;
+	    
 	    Graph2D[i][j]=255;
 	    break;
 	  }
   }
  };
-
+printf("%i\n",o);
      
 //--------------------------------------------------------------------------------
 //---------------- visu sous XWINDOW ---------------------------------------------
