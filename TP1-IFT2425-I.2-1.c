@@ -339,7 +339,7 @@ int main(int argc,char** argv)
 //--------------------------------------------------------------------------------
 // PROGRAMME ---------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-  float x,y,x_in,y_in;
+  double x,y,x_in,y_in;
  //Affichage d�grad� de niveaux de gris dans Graph2D
  int o=0;
  for(int i=0;i<length;i++) for(int j=0;j<width;j++){
