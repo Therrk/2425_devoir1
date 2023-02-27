@@ -330,11 +330,13 @@ int main(int argc,char** argv)
 
  length=width=512;
  float** Graph2D=fmatrix_allocate_2d(length,width); 
+ float** Graph_mandelbrot=fmatrix_allocate_2d(length,width); 
  flag_graph=1;
  zoom=1;
 
  //Init
  for(i=0;i<length;i++) for(j=0;j<width;j++) Graph2D[i][j]=0.0;
+ for(i=0;i<length;i++) for(j=0;j<width;j++) Graph_mandelbrot[i][j]=0;
  
 //--------------------------------------------------------------------------------
 // PROGRAMME ---------------------------------------------------------------------
@@ -353,19 +355,18 @@ int main(int argc,char** argv)
     x_prev = x;
     y_prev = y;
 	  if(sqrt(CARRE(x)+CARRE(y))>2){
-	    Graph2D[i][j]=1.0;
+	    Graph_mandelbrot[i][j]=1;
 	    break;
 	  }
   }
  }
   for (i = 0; i < length; i++) {
     for (j = 0; j < width; j++) {
-	    if (Graph2D[i][j]>0) {
-	      Graph2D[i][j]=0;
+	    if (Graph_mandelbrot[i][j]==1) {
 	      for (int k = 0; k < 10; k++) {
         	for (int l = 0; l < 10; l++) {
-    	      x_in = 2*(i-width/1.35)/(width-1)+0.002*k;
-            y_in = 2*(j-length/2.0)/(length-1)+0.002*l;
+    	      x_in = 2*(float(i)+k/10.0-width/1.35)/(width-1);
+            y_in = 2*(float(j)+l/10.0-length/2.0)/(length-1);
             x_prev=0;
             y_prev=0;
             for (int m = 0; m < 200; m++) {
@@ -375,15 +376,13 @@ int main(int argc,char** argv)
               y_prev = y;
               int i_coord = int((x*(width-1)/2.0)+width/1.35);
               int j_coord = int((y*(length-1)/2.0)+length/2);
-         	    if (i_coord<0||i_coord>511||j_coord<0||j_coord>511) {
+         	    if (i_coord<0||i_coord>=length||j_coord<0||j_coord>=width) {
 	              break;
               }
          	    Graph2D[i_coord][j_coord]++;
             }
           }
         }
-      } else {
-	      Graph2D[i][j]=0;
       }
     }
   }
