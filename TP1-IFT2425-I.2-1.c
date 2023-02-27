@@ -353,7 +353,7 @@ int main(int argc,char** argv)
     x_prev = x;
     y_prev = y;
 	  if(sqrt(CARRE(x)+CARRE(y))>2){
-	    Graph2D[i][j]=255;
+	    Graph2D[j][i]=255;
 	    break;
 	  }
   }
