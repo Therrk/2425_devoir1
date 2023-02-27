@@ -339,20 +339,20 @@ int main(int argc,char** argv)
 //--------------------------------------------------------------------------------
 // PROGRAMME ---------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-  double x,y,x_in,y_in;
+  double x,y,x_in,y_in,x_prev,y_prev;
  //Affichage d�grad� de niveaux de gris dans Graph2D
- int o=0;
  for(int i=0;i<length;i++) for(int j=0;j<width;j++){
   x_in = 2*(i-width/1.35)/(width-1);
   y_in = 2*(j-length/2.0)/(length-1);
   
-  x=0;
-  y=0;
+  x_prev=0;
+  y_prev=0;
   for (k = 0; k < 200; k++) {
-    x = CARRE(x)-CARRE(y)+x_in;
-    y = (2*x*y)+y_in;
+    x = CARRE(x_prev)-CARRE(y_prev)+x_in;
+    y = (2*x_prev*y_prev)+y_in;
+    x_prev = x;
+    y_prev = y;
 	  if(sqrt(CARRE(x)+CARRE(y))>2){
-	    
 	    Graph2D[i][j]=255;
 	    break;
 	  }
